@@ -45,8 +45,12 @@ const booking = conn.define("booking", {
 
 //Relationship establishment
 booking.belongsTo(member, { as: "bookedBy" });
+Booking.belongsTo(Facility);
+Facility.hasMany(Booking);
+
+Member.belongsTo(Member, { as: "sponsor" });
+Member.hasMany(Member, { as: "sponsored", foreignKey: "sponsorId" });
 member.hasMany(booking, { foreignKey: "bookedById" });
-booking.belongsTo(facility);
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
