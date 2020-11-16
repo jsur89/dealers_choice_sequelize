@@ -1,9 +1,11 @@
-var express = require("express");
-var router = express.Router();
+////TO BE USED LATER...MAYBE
 
-/* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.send("Users Placeholder");
-});
+// var express = require("express");
+// var router = express.Router();
 
-module.exports = router;
+// /* GET users listing. */
+// router.get("/", function (req, res, next) {
+//   res.send("Users Placeholder");
+// });
+
+// module.exports = router;
