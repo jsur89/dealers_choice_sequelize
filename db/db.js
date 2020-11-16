@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const { STRING, INTEGER, DATE, UUID, UUIDV4 } = Sequelize;
 const conn = new Sequelize("postgres://localhost/countryclub");
 
-const facility = conn.define("facility", {
+const Facility = conn.define("facility", {
   id: {
     type: UUID,
     primaryKey: true,
@@ -15,7 +15,7 @@ const facility = conn.define("facility", {
   },
 });
 
-const member = conn.define("member", {
+const Member = conn.define("member", {
   id: {
     type: UUID,
     primaryKey: true,
@@ -28,7 +28,7 @@ const member = conn.define("member", {
   },
 });
 
-const booking = conn.define("booking", {
+const Booking = conn.define("booking", {
   id: {
     type: INTEGER,
     primaryKey: true,
@@ -44,16 +44,17 @@ const booking = conn.define("booking", {
 });
 
 //Relationship establishment
-booking.belongsTo(member, { as: "bookedBy" });
+Booking.belongsTo(Member, { as: "bookedBy" });
 Booking.belongsTo(Facility);
 Facility.hasMany(Booking);
 
 Member.belongsTo(Member, { as: "sponsor" });
 Member.hasMany(Member, { as: "sponsored", foreignKey: "sponsorId" });
-member.hasMany(booking, { foreignKey: "bookedById" });
+Member.hasMany(Booking, { foreignKey: "bookedById" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
+  const jared = await Member.create({ first_name: "Jared" });
 };
 
-module.exports = { conn, syncAndSeed, models: { facility, member, booking } };
+module.exports = { conn, syncAndSeed, models: { Facility, Member, Booking } };

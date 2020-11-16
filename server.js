@@ -2,7 +2,7 @@ const {
   conn,
   syncAndSeed,
   models: { facility, member, booking },
-} = require("./db");
+} = require("./db/db.js");
 
 const init = async () => {
   try {
