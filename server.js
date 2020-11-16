@@ -4,14 +4,19 @@ const {
   models: { facility, member, booking },
 } = require("./db/db.js");
 
+const express = require("express");
+const app = express();
+
 const init = async () => {
   try {
     await conn.authenticate();
     await syncAndSeed();
-    console.log("Connected to DB");
-  } catch (error) {
-    console.log(error);
+    console.log("*********");
+    console.log("Connected to the Database");
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => console.log(`Listening on port ${port}`));
+  } catch (ex) {
+    console.log(ex);
   }
 };
-
 init();
