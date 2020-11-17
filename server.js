@@ -1,14 +1,24 @@
+const express = require("express");
+const app = express();
 const {
   conn,
   syncAndSeed,
   models: { Facility, Member, Booking },
 } = require("./db/db.js");
+const path = require("path");
 
 // const createError = require("http-errors");
-const express = require("express");
-const app = express();
+app.use(express.static(path.join(__dirname, "./assets")));
+app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(__dirname + "/assets"));
+app.get("/", async (req, res, next) => {
+  try {
+    const members = await Member.findAll();
+    res.send(members);
+  } catch (ex) {
+    next(ex);
+  }
+});
 
 app.get("/api/facilities", async (req, res, next) => {
   try {
