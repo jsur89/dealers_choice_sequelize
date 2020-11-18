@@ -1,10 +1,10 @@
-const express = require("express");
-const app = express();
 const {
   conn,
   syncAndSeed,
   models: { Facility, Member, Booking },
 } = require("./db/db.js");
+const express = require("express");
+const app = express();
 const path = require("path");
 
 app.use(express.static(path.join(__dirname, "./assets")));
@@ -35,6 +35,30 @@ app.get("/api/facilities", async (req, res, next) => {
     next(ex);
   }
 });
+
+app.get("/api/facilities2", async (req, res, next) => {
+  try {
+    const facility = await Facility.findByPk(req.params.id, {
+      include: ["idk"],
+    });
+    const html = `<!DOCTYPE html>
+    <html>
+      <head>
+      </head>
+      <body>
+        <h1> Brooklyn Country Club Facilities</h1>
+        <ul>
+
+        </ul>
+      <body>
+    </html>
+    `;
+    res.send(html);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 app.get("/api/members", async (req, res, next) => {
   try {
     res.send(

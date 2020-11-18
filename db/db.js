@@ -1,8 +1,11 @@
 const Sequelize = require("sequelize");
 const { STRING, INTEGER, DATE, UUID, UUIDV4 } = Sequelize;
-const conn = new Sequelize("postgres://localhost/countryclub", {
-  logging: false,
-});
+const conn = new Sequelize(
+  process.env.DATABASE_URL || "postgres://localhost/countryclub",
+  {
+    logging: false,
+  }
+);
 
 const Facility = conn.define("facility", {
   id: {
@@ -64,6 +67,9 @@ const syncAndSeed = async () => {
   const tennis1 = await Facility.create({ fac_name: "Tennis Court #1" });
   const tennis2 = await Facility.create({ fac_name: "Tennis Court #2" });
   const tennis3 = await Facility.create({ fac_name: "Tennis Court #3" });
+  const pool = await Facility.create({ fac_name: "Pool" });
+  const spa = await Facility.create({ fac_name: "Spa" });
+  const golf = await Facility.create({ fac_name: "Golf Course" });
 
   await Booking.create({
     startTime: "11/26/2020",
