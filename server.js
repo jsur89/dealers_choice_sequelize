@@ -7,13 +7,17 @@ const {
 } = require("./db/db.js");
 const path = require("path");
 
-// const createError = require("http-errors");
 app.use(express.static(path.join(__dirname, "./assets")));
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", async (req, res, next) => {
   try {
-    const members = await Member.findAll();
+    const members = await Member.findAll({
+      include: [
+        { model: Member, as: "sponsor" },
+        { model: Member, as: "sponsored" },
+      ],
+    });
     res.send(members);
   } catch (ex) {
     next(ex);

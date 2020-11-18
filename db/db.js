@@ -58,6 +58,7 @@ Member.hasMany(Booking, { foreignKey: "bookedById" });
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
   const jared = await Member.create({ first_name: "Jared" });
+  const nick = await Member.create({ first_name: "Nick", sponsorId: jared.id });
   const vanessa = await Member.create({ first_name: "Vanessa" });
   const rommel = await Member.create({ first_name: "Rommel" });
   const tennis1 = await Facility.create({ fac_name: "Tennis Court #1" });
